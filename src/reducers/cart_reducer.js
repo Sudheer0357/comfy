@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import {
   ADD_TO_CART,
   CLEAR_CART,
@@ -9,7 +8,8 @@ import {
 
 const cart_reducer = (state, action) => {
   if (action.type === ADD_TO_CART) {
-    const { id, amount, color, product } = action.payload;
+    const { id, color, amount, product } = action.payload;
+    console.log(color);
     const existingItem = state.cart.find((item) => item.id === id + color);
 
     if (existingItem) {
@@ -29,8 +29,8 @@ const cart_reducer = (state, action) => {
       const newItem = {
         id: id + color,
         name: product.name,
-        color,
-        amount,
+        color: color,
+        amount: amount,
         image: product.images[0].url,
         price: product.price,
         max: product.stock,
@@ -48,10 +48,30 @@ const cart_reducer = (state, action) => {
     return { ...state, cart: tempCart };
   }
 
-  // if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
-  //   const { id, value } = action.payload;
-  //   const tempCart=state.cart.map()
-  // }
+  if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
+    const { id, value } = action.payload;
+    const tempCart = state.cart.map((item) => {
+      if (item.id === id) {
+        if (value === 'inc') {
+          let newAmount = item.amount + 1;
+          if (newAmount > item.max) {
+            newAmount = item.max;
+          }
+          return { ...item, amount: newAmount };
+        }
+        if (value === 'dec') {
+          let newAmount = item.amount - 1;
+          if (newAmount < 1) {
+            newAmount = 1;
+          }
+          return { ...item, amount: newAmount };
+        }
+      }
+      return item;
+    });
+    return { ...state, cart: tempCart };
+  }
+
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 

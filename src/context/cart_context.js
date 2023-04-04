@@ -20,8 +20,8 @@ const CartContext = React.createContext();
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addToCart = (id, amount, color, product) => {
-    dispatch({ type: ADD_TO_CART, payload: { id, amount, color, product } });
+  const addToCart = (id, color, amount, product) => {
+    dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
 
   const clearCart = () => {
@@ -32,13 +32,17 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
 
+  const toggleAmount = (id, value) => {
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart));
-  });
+  }, [state.cart]);
 
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, clearCart, removeItem }}
+      value={{ ...state, addToCart, clearCart, removeItem, toggleAmount }}
     >
       {children}
     </CartContext.Provider>

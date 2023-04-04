@@ -104,9 +104,9 @@ const filter_reducer = (state, action) => {
       );
     }
 
-    tempProducts = tempProducts.filter((product) => {
-      return product.price <= price;
-    });
+    // tempProducts = tempProducts.filter((product) => {
+    //   return product.price <= price;
+    // });
 
     if (shipping) {
       tempProducts = tempProducts.filter(

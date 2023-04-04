@@ -35,7 +35,7 @@ const Nav = () => {
             );
           })}
         </ul>
-        <CartButtons />
+        <CartButtons openSidebar={openSidebar} />
       </div>
     </NavContainer>
   );

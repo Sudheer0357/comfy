@@ -12,7 +12,7 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_PRODUCTS) {
-    let maxPrice = state.filtered_products.map((product) => product.price);
+    let maxPrice = action.payload.map((product) => product.price);
     maxPrice = Math.max(...maxPrice);
 
     return {
@@ -73,7 +73,7 @@ const filter_reducer = (state, action) => {
 
   if (action.type === FILTER_PRODUCTS) {
     const { all_products } = state;
-    const { text, category, company, color, shipping } = state.filters;
+    const { text, category, company, color, shipping, price } = state.filters;
 
     let tempProducts = [...all_products];
 
@@ -103,9 +103,9 @@ const filter_reducer = (state, action) => {
       );
     }
 
-    // tempProducts = tempProducts.filter((product) => {
-    //   return product.price <= price;
-    // });
+    tempProducts = tempProducts.filter((product) => {
+      return product.price <= price;
+    });
 
     if (shipping) {
       tempProducts = tempProducts.filter(

@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import {
   LOAD_PRODUCTS,
   SET_LISTVIEW,

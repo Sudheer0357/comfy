@@ -14,6 +14,7 @@ const ProductImages = ({ images = [{ url: '' }] }) => {
               key={index}
               onClick={() => setImage(images[index])}
               className={`${image.url === img.url ? 'active' : null}`}
+              alt='imag'
             />
           );
         })}

@@ -9,7 +9,6 @@ const Sort = () => {
     filtered_products: products,
     setGridView,
     setListView,
-    sort,
     updateSort,
   } = useFilterContext();
   return (
